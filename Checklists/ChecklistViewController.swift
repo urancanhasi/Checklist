@@ -10,6 +10,7 @@ import UIKit
 
 class ChecklistViewController: UITableViewController {
     var dataModel = [Checklist]()
+    //var indexPathToEdit: NSIndexPath?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +26,60 @@ class ChecklistViewController: UITableViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    func addItem(item: Checklist) {
+        dataModel.append(item)
+        
+        let indexPath = NSIndexPath(forRow: dataModel.count - 1, inSection: 0)
+        self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+        
+        self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Bottom, animated: true)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "addItemSegue" {
+            if let navigationController = segue.destinationViewController as? UINavigationController {
+                if let addItemViewController = navigationController.topViewController as? AddItemViewController {
+                    
+                    addItemViewController.addItemViewControllerDelegate = self
+                    
+                }
+            }
+        } else if segue.identifier == "editItemSegue" {
+            if let navigationController = segue.destinationViewController as? UINavigationController {
+                if let addItemViewController = navigationController.topViewController as? AddItemViewController {
+                    if let indexPath = self.tableView.indexPathForCell(sender as! UITableViewCell) {
+                        addItemViewController.addItemViewControllerDelegate = self
+                        addItemViewController.checklistToEdit = dataModel[indexPath.row]
+                    }
+                }
+            }
+        }
+    }
+}
+
+extension ChecklistViewController : AddItemViewControllerDelegate {
+    func addItemViewControllerDidCancel(controller: AddItemViewController) {
+        
+        controller.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func addItemViewController(controller: AddItemViewController, didFinishAddingItem item: Checklist) {
+        addItem(item)
+        
+        controller.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func addItemViewController(controller: AddItemViewController, didFinishEditingItem item: Checklist) {
+        
+        if let index = dataModel.indexOf({checklist in
+            return checklist === item
+        }) {
+            let indexPath = NSIndexPath(forRow: index, inSection: 0)
+            self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+            controller.dismissViewControllerAnimated(true, completion: nil)
+        }
+    }
 }
 
 extension ChecklistViewController { //: UITableViewDataSource {
@@ -38,9 +93,15 @@ extension ChecklistViewController { //: UITableViewDataSource {
         let label = cell.viewWithTag(1000) as! UILabel
         let checklist = self.dataModel[indexPath.row]
         label.text = checklist.title
-        cell.accessoryType = checklist.done ? .Checkmark : .None
+        //cell.accessoryType = checklist.done ? .Checkmark : .None
         
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        dataModel.removeAtIndex(indexPath.row)
+        
+    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
     }
 }
 
@@ -52,5 +113,9 @@ extension ChecklistViewController { //: UITableViewDelegate {
         
         tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
     }
+    
+    /*override func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
+        self.indexPathToEdit = indexPath
+    }*/
 }
 

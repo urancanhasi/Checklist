@@ -8,15 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		B90635C31D706B73007DE1B0 /* Checklist.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90635C21D706B73007DE1B0 /* Checklist.swift */; };
+		B90635C51D707F5C007DE1B0 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = B90635C41D707F5C007DE1B0 /* README.md */; };
 		B938EF9D1D703D9700972C59 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B938EF9C1D703D9700972C59 /* AppDelegate.swift */; };
 		B938EF9F1D703D9700972C59 /* ChecklistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B938EF9E1D703D9700972C59 /* ChecklistViewController.swift */; };
 		B938EFA21D703D9700972C59 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B938EFA01D703D9700972C59 /* Main.storyboard */; };
 		B938EFA41D703D9700972C59 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B938EFA31D703D9700972C59 /* Assets.xcassets */; };
 		B938EFA71D703D9700972C59 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B938EFA51D703D9700972C59 /* LaunchScreen.storyboard */; };
+		B9C3CF221D742A9700CAB15C /* AddItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C3CF211D742A9700CAB15C /* AddItemViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		B90635C21D706B73007DE1B0 /* Checklist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Checklist.swift; sourceTree = "<group>"; };
+		B90635C41D707F5C007DE1B0 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		B938EF991D703D9700972C59 /* Checklists.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Checklists.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B938EF9C1D703D9700972C59 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B938EF9E1D703D9700972C59 /* ChecklistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChecklistViewController.swift; sourceTree = "<group>"; };
@@ -24,6 +27,7 @@
 		B938EFA31D703D9700972C59 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B938EFA61D703D9700972C59 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B938EFA81D703D9700972C59 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B9C3CF211D742A9700CAB15C /* AddItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddItemViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -40,6 +44,7 @@
 		B938EF901D703D9700972C59 = {
 			isa = PBXGroup;
 			children = (
+				B90635C41D707F5C007DE1B0 /* README.md */,
 				B938EF9B1D703D9700972C59 /* Checklists */,
 				B938EF9A1D703D9700972C59 /* Products */,
 			);
@@ -63,6 +68,7 @@
 				B938EFA51D703D9700972C59 /* LaunchScreen.storyboard */,
 				B938EFA81D703D9700972C59 /* Info.plist */,
 				B90635C21D706B73007DE1B0 /* Checklist.swift */,
+				B9C3CF211D742A9700CAB15C /* AddItemViewController.swift */,
 			);
 			path = Checklists;
 			sourceTree = "<group>";
@@ -138,8 +144,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B9C3CF221D742A9700CAB15C /* AddItemViewController.swift in Sources */,
 				B938EF9F1D703D9700972C59 /* ChecklistViewController.swift in Sources */,
 				B938EF9D1D703D9700972C59 /* AppDelegate.swift in Sources */,
+				B90635C51D707F5C007DE1B0 /* README.md in Sources */,
 				B90635C31D706B73007DE1B0 /* Checklist.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
