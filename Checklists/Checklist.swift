@@ -8,12 +8,26 @@
 
 import Foundation
 
-class Checklist {
+class Checklist : NSObject, NSCoding{
     var title:String = ""
     var done:Bool = false
+    static let TitleKey = "Title"
+    static let DoneKey = "Done"
     
     init(withTitle:String) {
         self.title = withTitle
         self.done = false
+    }
+    
+    required init?(coder aDecoder: NSCoder){
+        super.init()
+        title = aDecoder.decodeObjectForKey(Checklist.TitleKey) as! String
+        done = aDecoder.decodeBoolForKey(Checklist.DoneKey)
+        
+    }
+    
+    func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeObject(title, forKey: Checklist.TitleKey)
+        aCoder.encodeBool(done, forKey: Checklist.DoneKey)
     }
 }

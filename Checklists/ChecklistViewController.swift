@@ -15,11 +15,9 @@ class ChecklistViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        dataModel.append(Checklist(withTitle:"Promener le chien"))
-        dataModel.append(Checklist(withTitle:"Brosser mes dents"))
-        dataModel.append(Checklist(withTitle:"Apprendre à développer une app"))
-        dataModel.append(Checklist(withTitle:"M'entraîner pour le beer pong"))
-        dataModel.append(Checklist(withTitle:"Dormir"))
+        loadChecklists()
+        
+        print("Data file path: \(dataFilePath()))")
     }
 
     override func didReceiveMemoryWarning() {
@@ -56,6 +54,38 @@ class ChecklistViewController: UITableViewController {
             }
         }
     }
+    
+    func documentsDirectory() -> String{
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        return paths[0]
+    }
+    
+    func dataFilePath() -> String{
+        return(documentsDirectory() as NSString).stringByAppendingPathComponent("Checklists.plt")
+    }
+    
+    func saveChecklists(){
+        let data = NSMutableData()
+        let archiver = NSKeyedArchiver(forWritingWithMutableData: data)
+        archiver.encodeObject(dataModel, forKey: "checklists")
+        archiver.finishEncoding()
+        data.writeToFile(dataFilePath(), atomically: true)
+    }
+    
+    func loadChecklists() {
+        let path = dataFilePath()
+        if NSFileManager.defaultManager().fileExistsAtPath(path){
+            if let data = NSData(contentsOfFile: path){
+                let unarchiver = NSKeyedUnarchiver(forReadingWithData: data)
+                defer{
+                    unarchiver.finishDecoding()
+                }
+                self.dataModel = unarchiver.decodeObjectForKey("checklists") as! [Checklist]
+                //unarchiver.finishDecoding()
+                
+            }
+        }
+    }
 }
 
 extension ChecklistViewController : AddItemViewControllerDelegate {
@@ -68,6 +98,7 @@ extension ChecklistViewController : AddItemViewControllerDelegate {
         addItem(item)
         
         controller.dismissViewControllerAnimated(true, completion: nil)
+        saveChecklists()
     }
     
     func addItemViewController(controller: AddItemViewController, didFinishEditingItem item: Checklist) {
@@ -79,6 +110,8 @@ extension ChecklistViewController : AddItemViewControllerDelegate {
             self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
             controller.dismissViewControllerAnimated(true, completion: nil)
         }
+        
+        saveChecklists()
     }
 }
 
@@ -102,7 +135,10 @@ extension ChecklistViewController { //: UITableViewDataSource {
         dataModel.removeAtIndex(indexPath.row)
         
     tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+        
+        saveChecklists()
     }
+    
 }
 
 extension ChecklistViewController { //: UITableViewDelegate {
@@ -110,6 +146,8 @@ extension ChecklistViewController { //: UITableViewDelegate {
         
         let checklist = self.dataModel[indexPath.row]
         checklist.done = !checklist.done
+        
+        saveChecklists()
         
         tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
     }
